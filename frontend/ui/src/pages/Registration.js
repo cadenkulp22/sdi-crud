@@ -1,6 +1,7 @@
+
 const Registration = () => {
   return (
-    <></>
+    <>Login</>
   );
 }
 
