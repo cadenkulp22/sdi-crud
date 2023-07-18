@@ -1,27 +1,61 @@
+import { useState } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 
 const RegisterForm = ({ handleChange }) => {
+
+  const [firstInput, setFirstInput] = useState('');
+  const [lastInput, setLastInput] = useState('');
+  const [usernameInput, setUsernameInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    let newUser = {
+      first_name: firstInput,
+      last_name: lastInput,
+      username: usernameInput,
+      password: passwordInput
+    }
+    console.log(newUser);
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newUser)
+    };
+    fetch('http://localhost:3001/users', options)
+      .then(res => {
+        if (res.status === 201) {
+          console.log('user added')
+        }
+      })
+      .catch(err => console.log(err))
+  }
+
   return (
-    <Form>
-      <Form.Group className="mb-3" controlId="formName">
-        <Row>
+    <Form onSubmit={handleRegister}>
+        <Row className='mb-3'>
           <Col>
-            <Form.Label>First Name</Form.Label>
-            <Form.Control type="text" placeholder="First" />
+            <Form.Group controlId='formFirst'>
+              <Form.Label>First Name</Form.Label>
+              <Form.Control type="text" placeholder="First" onChange={e => setFirstInput(e.target.value)} value={firstInput} />
+            </Form.Group>
           </Col>
           <Col>
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control type="text" placeholder="Last" />
+            <Form.Group controlId='formLast'>
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control type="text" placeholder="Last" onChange={e => setLastInput(e.target.value)} value={lastInput} />
+            </Form.Group>
           </Col>
         </Row>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Group className="mb-3" controlId="formBasicUsername">
         <Form.Label>Username</Form.Label>
-        <Form.Control type="text" placeholder="Username" />
+        <Form.Control type="text" placeholder="Username" onChange={e => setUsernameInput(e.target.value)} value={usernameInput} />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
+        <Form.Control type="password" placeholder="Password" onChange={e => setPasswordInput(e.target.value)} value={passwordInput} />
       </Form.Group>
       <Button variant="primary" type="submit">
         Register
