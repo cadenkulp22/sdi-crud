@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = ({ handleChange }) => {
 
@@ -7,6 +8,8 @@ const RegisterForm = ({ handleChange }) => {
   const [lastInput, setLastInput] = useState('');
   const [usernameInput, setUsernameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
+
+  const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -27,7 +30,28 @@ const RegisterForm = ({ handleChange }) => {
     fetch('http://localhost:3001/users', options)
       .then(res => {
         if (res.status === 201) {
-          console.log('user added')
+          console.log('user added');
+          let newCreds = {
+            username: usernameInput,
+            password: passwordInput
+          };
+          const newUserOptions = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newCreds)
+          };
+          fetch('http://localhost:3001/users/login', newUserOptions)
+            .then(res => res.json())
+            .then(data => {
+              console.log('VAL', data);
+              document.cookie = `loggedIn=${data}`;
+              navigate('/', { replace: false })
+            })
+            .catch(err  => console.log(err));
+        } else {
+          console.log('error adding user')
         }
       })
       .catch(err => console.log(err))
