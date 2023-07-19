@@ -1,6 +1,11 @@
+import Navigation from '../components/Navigation';
+
 const Inventory = () => {
   return (
-    <>Inventory</>
+    <>
+      <Navigation />
+      <h1>Inventory</h1>
+    </>
   );
 }
 

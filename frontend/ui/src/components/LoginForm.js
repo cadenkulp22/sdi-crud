@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = ({ handleChange }) => {
 
   const [usernameInput, setUsernameInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
 
+  const navigate = useNavigate();
+
   const handleLogin = (e) => {
-    // setCreds to user entered creds
     e.preventDefault();
+
     let enteredCreds = {
       username: usernameInput,
       password: passwordInput
-    }
+    };
     const options = {
       method: 'POST',
       headers: {
@@ -20,10 +23,15 @@ const LoginForm = ({ handleChange }) => {
       },
       body: JSON.stringify(enteredCreds)
     };
+
     fetch('http://localhost:3001/users/login', options)
       .then(res => res.json())
-      .then(data => console.log('VAL', data))
-      .catch(err => console.log(err))
+      .then(data => {
+        console.log('VAL', data);
+        document.cookie = `loggedIn=${data}`;
+        navigate('/', { replace: false })
+      })
+      .catch(err  => console.log(err));
   }
 
   return (
