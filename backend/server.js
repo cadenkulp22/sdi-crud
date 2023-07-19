@@ -42,13 +42,14 @@ app.post('/users/login', (req, res) => {
     .where('username', req.body.username)
     .then(data => {
       if (data.length > 0) {
-        // bcrypt.compare()
-        res.send(data[0].password);
+        bcrypt.compare(req.body.password, data[0].password)
+          .then(found => res.send(found))
+          .catch(err => res.status(500).send(err));
       } else {
-        res.send('not found');
+        res.send(false);
       }
     })
-    .catch(err => res.send(err))
+    .catch(err => res.status(500).send(err))
 });
 
 app.listen(port, () => {

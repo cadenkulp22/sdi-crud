@@ -9,6 +9,21 @@ const LoginForm = ({ handleChange }) => {
   const handleLogin = (e) => {
     // setCreds to user entered creds
     e.preventDefault();
+    let enteredCreds = {
+      username: usernameInput,
+      password: passwordInput
+    }
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(enteredCreds)
+    };
+    fetch('http://localhost:3001/users/login', options)
+      .then(res => res.json())
+      .then(data => console.log('VAL', data))
+      .catch(err => console.log(err))
   }
 
   return (
