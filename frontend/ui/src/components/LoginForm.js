@@ -30,6 +30,7 @@ const LoginForm = ({ handleChange }) => {
       .then(data => {
         console.log('VAL', data);
         document.cookie = `loggedIn=${data.userExists}`;
+        document.cookie = `userId=${data.id}`;
         navigate('/', { replace: false })
       })
       .catch(err  => console.log(err));

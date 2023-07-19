@@ -67,7 +67,6 @@ app.post('/users/login', (req, res) => {
 
 app.get('/inventory', (req, res) => {
   const { userId } = req.query;
-  // const userId = req.cookies.userId;
   console.log(req.cookies)
   if (userId !== undefined) {
     knex('item')
