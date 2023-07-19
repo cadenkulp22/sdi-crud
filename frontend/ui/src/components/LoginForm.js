@@ -16,6 +16,7 @@ const LoginForm = ({ handleChange }) => {
       username: usernameInput,
       password: passwordInput
     };
+    
     const options = {
       method: 'POST',
       headers: {
@@ -25,13 +26,10 @@ const LoginForm = ({ handleChange }) => {
     };
 
     fetch('http://localhost:3001/users/login', options)
-      .then(res => {
-        console.log(res)
-        return res.json();
-      })
+      .then(res => res.json())
       .then(data => {
         console.log('VAL', data);
-        document.cookie = `loggedIn=${data}`;
+        document.cookie = `loggedIn=${data.userExists}`;
         navigate('/', { replace: false })
       })
       .catch(err  => console.log(err));

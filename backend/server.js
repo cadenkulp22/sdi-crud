@@ -43,12 +43,19 @@ app.post('/users/login', (req, res) => {
       if (data.length > 0) {
         bcrypt.compare(req.body.password, data[0].password)
           .then(found => {
-            let opts = {
-              httpOnly: true,
-              sameSite: 'strict',
-            };
-            res.cookie('userId', data[0].id, opts);
-            res.send(found);
+            // res.cookie('userId', data[0].id);
+            if (found) {
+              let responseObj = {
+                userExists: found,
+                ...data[0]
+              }
+              res.send(responseObj);
+            } else {
+              let responseObj = {
+                userExists: found
+              }
+              res.send(responseObj);
+            }
           })
           .catch(err => res.status(500).send(err));
       } else {

@@ -46,7 +46,7 @@ const RegisterForm = ({ handleChange }) => {
             .then(res => res.json())
             .then(data => {
               console.log('VAL', data);
-              document.cookie = `loggedIn=${data}`;
+              document.cookie = `loggedIn=${data.userExists}`;
               navigate('/', { replace: false })
             })
             .catch(err  => console.log(err));
