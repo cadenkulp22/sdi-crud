@@ -1,10 +1,29 @@
+import { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
+import { Container, Row, Col } from 'react-bootstrap';
+import cookie from 'cookie';
 
 const Inventory = () => {
+
+  const [items, setItems] = useState([]);
+
+  // useEffect(() => {
+  //   if ((cookie.parse(document.cookie)).loggedIn) {
+  //     let url = `http://localhost:3001/inventory?userId=${}`
+  //   }
+  // })
+
   return (
     <>
       <Navigation />
-      <h1>Inventory</h1>
+      <Container>
+        <h1>My Inventory</h1>
+        <Row>
+          <Col>
+
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 }

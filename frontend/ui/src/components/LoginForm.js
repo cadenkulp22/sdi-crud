@@ -25,7 +25,10 @@ const LoginForm = ({ handleChange }) => {
     };
 
     fetch('http://localhost:3001/users/login', options)
-      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+        return res.json();
+      })
       .then(data => {
         console.log('VAL', data);
         document.cookie = `loggedIn=${data}`;
