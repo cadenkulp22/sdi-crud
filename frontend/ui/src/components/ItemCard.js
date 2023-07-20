@@ -23,8 +23,6 @@ const ItemCard = ({ item, callback }) => {
       .then(res => {
         console.log('item deleted');
         callback();
-        // navigate('/add-item');
-        // navigate('/');
       })
       .catch(err => console.log(err));
   }
@@ -41,7 +39,6 @@ const ItemCard = ({ item, callback }) => {
             <Button variant="primary" className="me-2">Edit</Button>
             <Button variant="primary" onClick={handleDelete}>Delete</Button>
           </> : null}
-        
       </Card.Body>
     </Card>
   )
