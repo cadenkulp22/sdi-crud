@@ -3,16 +3,17 @@ import { Container, Card, Badge, Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import cookie from 'cookie';
+import EditCard from "../components/EditCard";
 
 const ItemDetails = () => {
 
   const navigate = useNavigate();
 
   const location = useLocation();
-  // console.log(location.state);
   let item = location.state;
 
   const [createdBy, setCreatedBy] = useState('');
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     fetch('http://localhost:3001/users')
@@ -24,10 +25,16 @@ const ItemDetails = () => {
       })
   }, [item.user_id]);
 
+  const handleEdit = () => {
+    setEditing(true);
+  }
+
+  const handleSubmitEdits = () => {
+    setEditing(false);
+  }
+
   const handleDelete = () => {
-
     let url = `http://localhost:3001/inventory/${item.id}`;
-
     const options = {
       method: 'DELETE',
       headers: {
@@ -47,20 +54,22 @@ const ItemDetails = () => {
     <>
       <Navigation />
       <Container className="mt-5">
+        {editing ? <EditCard item={item} callback={handleSubmitEdits} /> :
         <Card>
           <Card.Body>
             <Card.Title>{item.item_name}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">{item.description}</Card.Subtitle>
             <Badge pill bg="secondary" className="me-2 mb-2">Quantity: {item.quantity}</Badge>
             <Badge pill bg="secondary">Created By: {createdBy}</Badge>
-            {(cookie.parse(document.cookie)).loggedIn ?
+            {(cookie.parse(document.cookie)).loggedIn && ((cookie.parse(document.cookie)).userId === item.user_id.toString()) ?
               <>
                 <br />
-                <Button variant="primary" className="me-2">Edit</Button>
+                <Button variant="primary" className="me-2" onClick={handleEdit}>Edit</Button>
                 <Button variant="primary" onClick={handleDelete}>Delete</Button>
               </> : null}
           </Card.Body>
         </Card>
+        }
       </Container>
     </>
   );
