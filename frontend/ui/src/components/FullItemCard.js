@@ -1,19 +1,16 @@
-import { Card, Badge } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Card, Badge } from "react-bootstrap"
 
-const ItemCard = ({ item }) => {
-
-  const navigate = useNavigate();
-
+const FullItemCard = ({ item }) => {
   return (
-    <Card onClick={() => navigate(`/${item.id}`, { state: item })}>
+    <Card>
       <Card.Body>
         <Card.Title>{item.item_name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{item.description}</Card.Subtitle>
         <Badge pill bg="secondary">Quantity: {item.quantity}</Badge>
+        <Badge pill bg="secondary">Created By: {item.user_id}</Badge>
       </Card.Body>
     </Card>
   )
 }
 
-export default ItemCard;
+export default FullItemCard;

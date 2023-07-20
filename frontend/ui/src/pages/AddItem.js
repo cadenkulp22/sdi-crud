@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import cookie from 'cookie';
 import { useNavigate } from "react-router-dom";
+import Navigation from "../components/Navigation";
 
 const AddItem = () => {
 
@@ -40,6 +41,7 @@ const AddItem = () => {
 
   return (
     <>
+    <Navigation />
     {(cookie.parse(document.cookie)).loggedIn ? 
     <Container className="mt-5">
       <Form onSubmit={handleAddItem}>

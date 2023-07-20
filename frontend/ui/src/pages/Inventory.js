@@ -7,8 +7,6 @@ import { Link } from 'react-router-dom';
 
 const Inventory = () => {
 
-  console.log('render')
-
   const [items, setItems] = useState([]);
   const [viewingAllItems, setViewingAllItems] = useState(false);
 
