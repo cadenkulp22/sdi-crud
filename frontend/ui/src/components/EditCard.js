@@ -26,10 +26,13 @@ const EditCard = ({ item, callback }) => {
     };
 
     fetch(url, options)
-      .then(res => console.log(res))
+      .then(res => {
+        console.log(res);
+        callback();
+      })
       .catch(err => console.log(err));
 
-    callback();
+    // callback();
   }
   
   return (

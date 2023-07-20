@@ -10,8 +10,9 @@ const ItemDetails = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
-  let item = location.state;
+  // let item = location.state;
 
+  const [item, setItem] = useState(location.state);
   const [createdBy, setCreatedBy] = useState('');
   const [editing, setEditing] = useState(false);
 
@@ -31,6 +32,12 @@ const ItemDetails = () => {
 
   const handleSubmitEdits = () => {
     setEditing(false);
+    fetch('http://localhost:3001/inventory')
+      .then(res => res.json())
+      .then(items => {
+        let itemArray = items.filter(currItem => currItem.id === item.id);
+        setItem(itemArray[0]);
+      })
   }
 
   const handleDelete = () => {
