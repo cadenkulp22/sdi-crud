@@ -9,6 +9,7 @@ const Inventory = () => {
 
   const [items, setItems] = useState([]);
   const [viewingAllItems, setViewingAllItems] = useState(false);
+  const [renderToggle, setRenderToggle] = useState(false);
 
   useEffect(() => {
     let url = '';
@@ -33,7 +34,11 @@ const Inventory = () => {
           setItems(data)
         })
     }
-  }, [viewingAllItems]);
+  }, [viewingAllItems, renderToggle]);
+
+  const handleForceRerender = () => {
+    setRenderToggle(prev => !prev);
+  }
 
   return (
     <>
@@ -57,8 +62,8 @@ const Inventory = () => {
         }
         <Row className='row-cols-4 mt-4'>
           {items.length > 0 ?
-            items.map(item => <Col key={item.id}><ItemCard item={item}/></Col>) :
-            <h1>You do not have any items</h1>}
+            items.map(item => <Col key={item.id}><ItemCard item={item} callback={handleForceRerender}/></Col>) :
+            <h5>You do not have any items</h5>}
         </Row>
       </Container>
     </>

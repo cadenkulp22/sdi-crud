@@ -94,6 +94,15 @@ app.post('/inventory', (req, res) => {
     .catch(err => res.status(501).send(err))
 });
 
+app.delete('/inventory/:id', (req, res) => {
+  let { id } = req.params;
+  knex('item')
+    .where('id', id)
+    .del()
+    .then(num => res.status(200).send({ success: true }))
+    .catch(err => res.status(404).send(err));
+})
+
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
