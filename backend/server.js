@@ -94,6 +94,19 @@ app.post('/inventory', (req, res) => {
     .catch(err => res.status(501).send(err))
 });
 
+app.patch('/inventory/:id', (req, res) => {
+  let { id } = req.params;
+  knex('item')
+    .where('id', id)
+    .update({
+      'item_name': req.body.item_name,
+      'description': req.body.description,
+      'quantity': req.body.quantity
+    })
+    .then(() => res.status(200).send({ success: true }))
+    .catch(err => res.status(304).send(err));
+})
+
 app.delete('/inventory/:id', (req, res) => {
   let { id } = req.params;
   knex('item')
@@ -101,7 +114,7 @@ app.delete('/inventory/:id', (req, res) => {
     .del()
     .then(num => res.status(200).send({ success: true }))
     .catch(err => res.status(404).send(err));
-})
+});
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
