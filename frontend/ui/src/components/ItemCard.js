@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import cookie from 'cookie';
 import { useState } from "react";
 import EditCard from "./EditCard";
+import './ItemCard.css';
 
 const ItemCard = ({ item, callback }) => {
 
@@ -48,7 +49,7 @@ const ItemCard = ({ item, callback }) => {
   return (
     <>
     {editing ? <EditCard item={item} callback={handleSubmitEdits} /> :
-    <Card onClick={() => navigate(`/${item.id}`, { state: item })}>
+    <Card className="item-card" onClick={() => navigate(`/${item.id}`, { state: item })}>
       <Card.Body>
         <Card.Title>{item.item_name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{truncateText(item.description)}</Card.Subtitle>

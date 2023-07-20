@@ -59,7 +59,7 @@ const Inventory = () => {
               </>
             : <h1>All Items</h1>
         }
-        <Row className='row-cols-4 mt-4'>
+        <Row className='row-cols-4 mt-4 g-3'>
           {items.length > 0 ?
             items.map(item => <Col key={item.id}><ItemCard item={item} callback={handleForceRerender}/></Col>) :
             <h5>You do not have any items</h5>}
