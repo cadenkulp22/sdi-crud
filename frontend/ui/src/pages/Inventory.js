@@ -22,7 +22,6 @@ const Inventory = () => {
       fetch(url)
         .then(res => res.json())
         .then(data => {
-          console.log(data)
           setItems(data)
         })
     } else {

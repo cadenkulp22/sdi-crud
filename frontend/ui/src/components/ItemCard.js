@@ -1,13 +1,26 @@
 import { Card, Badge, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import cookie from 'cookie';
+import { useState } from "react";
+import EditCard from "./EditCard";
 
 const ItemCard = ({ item, callback }) => {
 
+  const [editing, setEditing] = useState(false);
+
   const navigate = useNavigate();
 
-  const handleDelete = (event) => {
+  const handleEdit = (event) => {
+    event.stopPropagation();
+    setEditing(true);
+  }
 
+  const handleSubmitEdits = () => {
+    setEditing(false);
+    callback();
+  }
+
+  const handleDelete = (event) => {
     event.stopPropagation();
 
     let url = `http://localhost:3001/inventory/${item.id}`;
@@ -28,6 +41,8 @@ const ItemCard = ({ item, callback }) => {
   }
 
   return (
+    <>
+    {editing ? <EditCard item={item} callback={handleSubmitEdits} /> :
     <Card onClick={() => navigate(`/${item.id}`, { state: item })}>
       <Card.Body>
         <Card.Title>{item.item_name}</Card.Title>
@@ -36,11 +51,14 @@ const ItemCard = ({ item, callback }) => {
         {(cookie.parse(document.cookie)).loggedIn ?
           <>
             <br />
-            <Button variant="primary" className="me-2">Edit</Button>
+            <Button variant="primary" className="me-2" onClick={handleEdit}>Edit</Button>
             <Button variant="primary" onClick={handleDelete}>Delete</Button>
           </> : null}
       </Card.Body>
     </Card>
+    }
+    </>
+    
   )
 }
 
