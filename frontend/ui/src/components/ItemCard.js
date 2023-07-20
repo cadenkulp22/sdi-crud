@@ -40,13 +40,18 @@ const ItemCard = ({ item, callback }) => {
       .catch(err => console.log(err));
   }
 
+  const truncateText = (text) => {
+    const maxLength = 100;
+    return text.length > maxLength ? (text.slice(0, maxLength) + '...') : text;
+  }
+
   return (
     <>
     {editing ? <EditCard item={item} callback={handleSubmitEdits} /> :
     <Card onClick={() => navigate(`/${item.id}`, { state: item })}>
       <Card.Body>
         <Card.Title>{item.item_name}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">{item.description}</Card.Subtitle>
+        <Card.Subtitle className="mb-2 text-muted">{truncateText(item.description)}</Card.Subtitle>
         <Badge pill bg="secondary" className="mb-2">Quantity: {item.quantity}</Badge>
         {(cookie.parse(document.cookie)).loggedIn && ((cookie.parse(document.cookie)).userId === item.user_id.toString()) ?
           <>
